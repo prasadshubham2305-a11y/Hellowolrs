@@ -22,7 +22,7 @@ jobs:
       - name: Test BODY prototype
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
-            twilight1/twilight_body.c \
+            twilight1/twilight1_body.c \
             twilight1/test_twilight.c \
             -o test_body
           ./test_body
