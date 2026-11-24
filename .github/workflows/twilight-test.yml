@@ -17,7 +17,7 @@ jobs:
       - name: Compile BODY test
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
-            twilight1_body.c test_twilight.c \
+            twilight1/twilight1_body.c twilight1/test_twilight.c \
             -o twilight_test
 
       - name: Run BODY test
