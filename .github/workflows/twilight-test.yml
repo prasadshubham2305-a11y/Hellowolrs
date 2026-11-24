@@ -1,0 +1,24 @@
+name: TWILIGHT-1 BODY Test
+
+on:
+  push:
+    branches:
+      - twilight-1-dev
+  workflow_dispatch:
+
+jobs:
+  test-body:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile BODY test
+        run: |
+          gcc -std=c11 -Wall -Wextra -Werror \
+            twilight1_body.c test_twilight.c \
+            -o twilight_test
+
+      - name: Run BODY test
+        run: ./twilight_test
