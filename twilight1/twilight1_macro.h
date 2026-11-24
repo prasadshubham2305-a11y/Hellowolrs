@@ -34,5 +34,10 @@ static inline uint8_t twilight1_macro_clamp(int value)
 
     return (uint8_t)value;
 }
+void twilight1_macro_init(twilight1_macro_values_t *macros);
 
+void twilight1_macro_set(
+    twilight1_macro_values_t *macros,
+    twilight1_macro_id_t id,
+    int value);
 #endif
