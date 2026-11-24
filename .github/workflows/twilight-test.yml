@@ -34,3 +34,13 @@ jobs:
             twilight1/test_twilight1_macro.c \
             -o test_macros
           ./test_macros
+
+      - name: Test Engine Core
+        run: |
+          gcc -std=c11 -Wall -Wextra -Werror \
+            twilight1/twilight1_body.c \
+            twilight1/twilight1_macro.c \
+            twilight1/twilight1_engine.c \
+            twilight1/test_twilight1_engine.c \
+            -o test_engine
+          ./test_engine
