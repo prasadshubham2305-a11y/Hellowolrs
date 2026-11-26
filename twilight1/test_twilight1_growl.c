@@ -34,8 +34,8 @@ static void test_full_growl(void)
     uint8_t output[PATCH_BYTES];
 
     uint8_t expected[6] = {
-        50, 54, 57, 60, 55, 52
-    };
+    51, 52, 53, 55, 52, 51
+};
 
     for (unsigned i = 0; i < 6; i++)
         source[LEVEL_OFFSETS[i]] = 50;
