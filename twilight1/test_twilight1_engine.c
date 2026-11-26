@@ -163,16 +163,33 @@ static void test_unimplemented_macros_neutral(void)
         source[i] = (uint8_t)(i % 128);
 
     twilight1_macro_init(&macros);
-    macros.motion = 50;
+    
     macros.space = 50;
     macros.mutate = 50;
 
     assert(twilight1_engine_apply(source, output, &macros) == 0);
 
-    /* MOTION, SPACE and MUTATE are not implemented yet:
+   /* SPACE and MUTATE are not implemented yet:
        a non-zero value must leave the patch byte-identical. */
     assert(memcmp(source, output, PATCH_BYTES) == 0);
 }
+static void test_motion_in_engine(void)
+{
+    uint8_t source[PATCH_BYTES] = {0};
+    uint8_t output[PATCH_BYTES];
+    twilight1_macro_values_t macros;
+
+    twilight1_macro_init(&macros);
+    macros.motion = 50;
+
+    assert(twilight1_engine_apply(source, output, &macros) == 0);
+
+    assert(output[139] == 30);
+    assert(output[140] == 20);
+    assert(output[143] == 3);
+    assert(source[139] == 0);
+}
+
 int main(void)
 {
     test_neutral();
@@ -182,6 +199,8 @@ int main(void)
 test_invalid_macro_range();
     test_untouched_bytes_preserved();
     test_unimplemented_macros_neutral();
+        test_motion_in_engine();
+
     printf("TWILIGHT-1 Engine tests passed!\n");
     return 0;
 }
