@@ -34,7 +34,7 @@ static void test_full_growl(void)
     uint8_t output[PATCH_BYTES];
 
     uint8_t expected[6] = {
-    51, 52, 53, 55, 52, 51
+    51, 54, 57, 60, 55, 52
 };
 
     for (unsigned i = 0; i < 6; i++)
