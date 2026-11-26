@@ -54,11 +54,11 @@ jobs:
             twilight1/test_twilight1_growl.c \
             -o test_growl
           ./test_growl
-                - name: Test MOTION
+
+      - name: Test MOTION
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
             twilight1/twilight1_motion.c \
             twilight1/test_twilight1_motion.c \
             -o test_motion
           ./test_motion
-
