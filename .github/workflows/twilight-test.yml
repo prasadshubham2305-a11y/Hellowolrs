@@ -52,6 +52,8 @@ jobs:
           gcc -std=c11 -Wall -Wextra -Werror \
             twilight1/twilight1_growl.c \
             twilight1/test_twilight1_growl.c \
+            twilight1/twilight1_motion.c \
+
             -o test_growl
           ./test_growl
 
