@@ -20,6 +20,11 @@ void twilight1_growl_apply(
     uint8_t output[PATCH_BYTES],
     unsigned growl);
 
+void twilight1_motion_apply(
+    const uint8_t source[PATCH_BYTES],
+    uint8_t output[PATCH_BYTES],
+    unsigned motion);
+
 int twilight1_engine_apply(
     const uint8_t source[PATCH_BYTES],
     uint8_t output[PATCH_BYTES],
@@ -51,8 +56,12 @@ int twilight1_engine_apply(
     twilight1_growl_apply(
         stage_b, stage_a, macros->growl);
 
+    /* GROWL -> MOTION */
+    twilight1_motion_apply(
+        stage_a, stage_b, macros->motion);
+
     /* Final output */
-    memcpy(output, stage_a, PATCH_BYTES);
+    memcpy(output, stage_b, PATCH_BYTES);
 
     return 0;
 }
