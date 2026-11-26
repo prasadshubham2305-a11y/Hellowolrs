@@ -89,14 +89,63 @@ static void test_invalid_pointers(void)
     assert(twilight1_engine_apply(source, NULL, &macros) == -1);
     assert(twilight1_engine_apply(source, output, NULL) == -1);
 }
+static void test_invalid_macro_range(void)
+{
+    uint8_t source[PATCH_BYTES] = {0};
+    uint8_t output[PATCH_BYTES];
+    twilight1_macro_values_t macros;
 
+    twilight1_macro_init(&macros);
+    macros.body = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+
+    twilight1_macro_init(&macros);
+    macros.edge = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+
+    twilight1_macro_init(&macros);
+    macros.growl = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+}
+
+static void test_untouched_bytes_preserved(void)
+{
+    uint8_t source[PATCH_BYTES];
+    uint8_t output[PATCH_BYTES];
+    twilight1_macro_values_t macros;
+
+    for (unsigned i = 0; i < PATCH_BYTES; i++)
+        source[i] = (uint8_t)(i % 128);
+
+    twilight1_macro_init(&macros);
+    macros.body = 50;
+    macros.edge = 50;
+    macros.growl = 50;
+
+    assert(twilight1_engine_apply(source, output, &macros) == 0);
+
+    /* Non-transformed bytes must remain unchanged. */
+    for (unsigned i = 0; i < PATCH_BYTES; i++)
+    {
+        if (i == 16 || i == 37 || i == 58 ||
+            i == 79 || i == 100 || i == 121 ||
+            i == 135)
+            continue;
+
+        assert(output[i] == source[i]);
+    }
+}
 int main(void)
 {
     test_neutral();
     test_body_growl_chain();
     test_edge_in_engine();
     test_invalid_pointers();
-
+test_invalid_macro_range();
+    test_untouched_bytes_preserved();
     printf("TWILIGHT-1 Engine tests passed!\n");
     return 0;
 }
