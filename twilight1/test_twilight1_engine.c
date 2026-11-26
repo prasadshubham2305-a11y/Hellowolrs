@@ -109,6 +109,21 @@ static void test_invalid_macro_range(void)
     macros.growl = 101;
 
     assert(twilight1_engine_apply(source, output, &macros) == -1);
+        twilight1_macro_init(&macros);
+    macros.motion = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+
+    twilight1_macro_init(&macros);
+    macros.space = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+
+    twilight1_macro_init(&macros);
+    macros.mutate = 101;
+
+    assert(twilight1_engine_apply(source, output, &macros) == -1);
+
 }
 
 static void test_untouched_bytes_preserved(void)
