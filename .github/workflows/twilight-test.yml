@@ -46,10 +46,10 @@ jobs:
             -o test_engine
           ./test_engine
 
-      - name: Test EDGE
+      - name: Test GROWL
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
-            twilight1/twilight1_edge.c \
-            twilight1/test_twilight1_edge.c \
-            -o test_edge
-          ./test_edge
+            twilight1/twilight1_growl.c \
+            twilight1/test_twilight1_growl.c \
+            -o test_growl
+          ./test_growl
