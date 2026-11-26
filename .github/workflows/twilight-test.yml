@@ -39,18 +39,17 @@ jobs:
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
             twilight1/twilight1_body.c \
+            twilight1/twilight1_edge.c \
             twilight1/twilight1_macro.c \
             twilight1/twilight1_engine.c \
             twilight1/test_twilight1_engine.c \
             -o test_engine
           ./test_engine
 
-      - name: Test EDGE isolation
+      - name: Test EDGE
         run: |
           gcc -std=c11 -Wall -Wextra -Werror \
-            twilight1/twilight1_body.c \
-            twilight1/twilight1_macro.c \
-            twilight1/twilight1_engine.c \
+            twilight1/twilight1_edge.c \
             twilight1/test_twilight1_edge.c \
             -o test_edge
           ./test_edge
