@@ -1,19 +1,19 @@
 #include <stdint.h>
-
 #include "twilight1_macro.h"
 
 #define TWILIGHT1_PATCH_BYTES 156
 
-/* BODY transformation implemented in twilight1_body.c */
 void twilight1_body_apply(
     const uint8_t source[TWILIGHT1_PATCH_BYTES],
     uint8_t output[TWILIGHT1_PATCH_BYTES],
     unsigned body);
 
-/* TWILIGHT-1 Engine Core v1
-   Original patch is never modified.
-   Transformations are applied to a separate output buffer.
-*/
+void twilight1_edge_apply(
+    const uint8_t source[TWILIGHT1_PATCH_BYTES],
+    uint8_t output[TWILIGHT1_PATCH_BYTES],
+    unsigned edge);
+
+/* Engine Core v2: BODY -> EDGE */
 int twilight1_engine_apply(
     const uint8_t source[TWILIGHT1_PATCH_BYTES],
     uint8_t output[TWILIGHT1_PATCH_BYTES],
@@ -22,11 +22,17 @@ int twilight1_engine_apply(
     if (!source || !output || !macros)
         return -1;
 
-    /* K1 BODY only in Engine Core v1 */
+    uint8_t body_patch[TWILIGHT1_PATCH_BYTES];
+
     twilight1_body_apply(
         source,
-        output,
+        body_patch,
         macros->body);
+
+    twilight1_edge_apply(
+        body_patch,
+        output,
+        macros->edge);
 
     return 0;
 }
