@@ -30,6 +30,11 @@ function Build-Simulator {
         $name = $file.FullName.Substring($root.Length+1).Replace('\','/')
         if (!$name.StartsWith('app/board/') -and $file.Extension -cin @('.c','.h','.inc')) { $inputs[$name] = Hash $file.FullName }
     }
+        # TWILIGHT-1 transformation layer: host-tested sources, compiled into the engine.
+    foreach ($name in @('twilight1/twilight1_body.c', 'twilight1/twilight1_edge.c', 'twilight1/twilight1_growl.c', 'twilight1/twilight1_motion.c', 'twilight1/twilight1_macro.c', 'twilight1/twilight1_engine.c', 'twilight1/twilight1_macro.h')) {
+        $inputs[$name] = Hash (Join-Path $root $name)
+    }
+
     foreach ($name in @('tools/Build-Web.ps1') +
         @(Get-ChildItem -LiteralPath (Join-Path $root 'sdk/include') -Filter '*.h' | ForEach-Object { 'sdk/include/' + $_.Name })) {
         $inputs[$name] = Hash (Join-Path $root $name)
